@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import '../app/components/widgets/custom_toast.dart';
-import 'dimens.dart';
 
 class Util {
 
@@ -28,8 +24,5 @@ class Util {
     CustomToast().showToast(body);
   }
 
-  static void hideLoader() {
-    Loader.hide();
-  }
 }
 
