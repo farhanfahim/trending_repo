@@ -35,7 +35,6 @@ dependencies:
   get: ^4.6.6
 
   logger: ^2.0.2+1
-  connectivity: ^3.0.6
   dio: ^5.4.0
   flutter_svg: ^2.0.9
   intl: ^0.18.1

@@ -13,15 +13,15 @@ class AppPreferences {
   static const String _prefTypeString = "STRING";
 
   /// Constants for Preference-Keys
-  static const String _userId = "USER_ID";
+  static const String oldData = "OLD_DATA";
 
   //--------------------------------------------------- Public Preference Methods -------------------------------------------------------------
   static void removeValue({required String key}) {
     _preferences.remove(key);
   }
-  static void setUserId({required String userId}) => _setPreference(prefName: _userId, prefValue: userId, prefType: _prefTypeString);
+  static void setData({required String data}) => _setPreference(prefName: oldData, prefValue: data, prefType: _prefTypeString);
 
-  static Future<String> getUserId() async => await _getPreference(prefName: _userId);
+  static Future<String> getData() async => await _getPreference(prefName: oldData);
 
 
   //--------------------------------------------------- Private Preference Methods ----------------------------------------------------

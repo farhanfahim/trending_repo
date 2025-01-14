@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:trending_repo/app/data/models/trending_repo_response_model.dart';
 import '../../../../../../utils/dimens.dart';
 import '../../../components/resources/app_colors.dart';
 import '../../../components/resources/app_images.dart';
@@ -11,7 +12,7 @@ import '../../../components/widgets/my_text.dart';
 
 class RepoTile extends StatelessWidget {
 
-  final String model;
+  final TrendingRepoResponseModel model;
   final Function()? onTap;
   RepoTile({required this.model, this.onTap});
 
@@ -27,11 +28,11 @@ class RepoTile extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                 /* model.user!.userImage!=null?CircleImage(
-                    imageUrl: model.user!.userImage!.mediaUrl!,
+                  model.buildBy!.first.avatar!=null?CircleImage(
+                    imageUrl: model.buildBy!.first.avatar,
                     size: 10.w,
                     border: false,
-                  ):*/CircleImage(
+                  ):CircleImage(
                     image: AppImages.user,
                     size: 10.w,
                     border: false,
@@ -48,7 +49,7 @@ class RepoTile extends StatelessWidget {
                           children: [
                             Expanded(
                               child: MyText(
-                                text: "title",
+                                text: model.buildBy!.first.by??"",
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.black,
                                 fontSize: 14,
@@ -59,12 +60,31 @@ class RepoTile extends StatelessWidget {
                         ),
                         const SizedBox(height: AppDimen.verticalSpacing,),
                         MyText(
-                          text: "sub title",
+                          text: model.desc??"",
                           color: AppColors.grey,
                           fontSize: 13,
                         ),
-
-
+                        const SizedBox(height: AppDimen.verticalSpacing,),
+                        Row(
+                          children: [
+                            Text(
+                              model.lang??"",
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.star, size: 14, color: Colors.amber),
+                            const SizedBox(width: 4),
+                            Text(
+                              "${model.stars??""}",
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   )

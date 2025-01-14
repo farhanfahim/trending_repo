@@ -15,7 +15,7 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, BaseResponse<List<TrendingRepoResponseModel>>>> getTrendingRepo(Map<String, dynamic> map) async {
     try {
-      bool? isConnected = await Util.check();
+      bool? isConnected =true;
       if (isConnected) {
 
 
