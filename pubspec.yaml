@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.4.0
   flutter_svg: ^2.0.9
   intl: ^0.18.1
+  connectivity: ^3.0.6
   cached_network_image: ^3.3.1
   shared_preferences: ^2.2.2
   fluttertoast: ^8.2.4
