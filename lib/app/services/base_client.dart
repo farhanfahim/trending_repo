@@ -7,15 +7,13 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../shared_prefrences/app_prefrences.dart';
 import '../components/resources/strings_enum.dart';
 import '../components/widgets/custom_snackbar.dart';
-import '../routes/app_pages.dart';
 import 'api_exceptions.dart';
-import 'network_layer.dart';
 
 
 class BaseClient {
 
   static Future<bool> checkInternetConnection() async {
-    bool result = await InternetConnectionChecker().hasConnection;
+    bool result = await InternetConnectionChecker.instance.hasConnection;
     return result;
   }
 

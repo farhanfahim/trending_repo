@@ -1,9 +1,13 @@
 class Strings {
 
+  static const String trending = 'Trending';
+  static const String retry = 'RETRY';
   static const String inBeta = 'Will be implemented in beta phase';
   static const String noInternetConnection = 'No internet connection';
   static const String serverNotResponding = 'server not responding';
   static const String someThingWentWorng = 'Something went wrong. Try Again.';
+  static const String anAlienIsProbablyBlocking = 'An alien is probably blocking your network.';
+  static const String someThingWentWrong = 'Something went wrong..';
   static const String apiNotFound = 'api not found';
   static const String serverError = 'Server Error! Something went wrong, please try again.';
   static const String success = "success";

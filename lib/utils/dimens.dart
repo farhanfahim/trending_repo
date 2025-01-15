@@ -1,5 +1,6 @@
 class AppDimen {
   static const double pagesHorizontalPadding = 15.0;
+  static const double pagesHorizontalPaddingNew = 20.0;
   static const double pagesVerticalPadding = 10.0;
   static const double pagesVerticalPaddingNew = 15.0;
 
@@ -25,7 +26,7 @@ class AppDimen {
   static const double iconSize = 18.0;
 
   static const double contentPadding = 10.0;
-  static const double mapButtonPadding = 8.0;
+  static const double buttonPadding = 8.0;
 
   static const int gridCount = 2;
   static const double gridSpacing = 8;

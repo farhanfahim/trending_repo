@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../resources/app_images.dart';
 
@@ -131,19 +130,6 @@ class CommonImageView extends StatelessWidget {
           height: height,
           width: width,
           fit: fit,
-        ),
-      );
-    } else if (svgPath != null && svgPath!.isNotEmpty) {
-      return SizedBox(
-        height: height,
-        width: width,
-        child: SvgPicture.asset(
-          svgPath!,
-          height: height,
-          width: width,
-          fit: fit,
-          color: color,
-          matchTextDirection: matchTextDirection,
         ),
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {

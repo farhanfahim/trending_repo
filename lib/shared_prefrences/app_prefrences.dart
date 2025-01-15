@@ -13,16 +13,18 @@ class AppPreferences {
   static const String _prefTypeString = "STRING";
 
   /// Constants for Preference-Keys
-  static const String oldData = "OLD_DATA";
+  static const String cachedData = "cachedData";
+  static const String lastFetchTime = "lastFetchTime";
 
   //--------------------------------------------------- Public Preference Methods -------------------------------------------------------------
   static void removeValue({required String key}) {
     _preferences.remove(key);
   }
-  static void setData({required String data}) => _setPreference(prefName: oldData, prefValue: data, prefType: _prefTypeString);
+  static void setCachedData({required String data}) => _setPreference(prefName: cachedData, prefValue: data, prefType: _prefTypeString);
+  static Future<String> getCachedData() async => await _getPreference(prefName: cachedData)??"";
 
-  static Future<String> getData() async => await _getPreference(prefName: oldData);
-
+  static void setFetchTimeData({required String data}) => _setPreference(prefName: lastFetchTime, prefValue: data, prefType: _prefTypeString);
+  static Future<String> getFetchTimeData() async => await _getPreference(prefName: lastFetchTime)??"";
 
   //--------------------------------------------------- Private Preference Methods ----------------------------------------------------
   /// @usage -> This is a generalized method to set preferences with required Preference-Name(Key) with Preference-Value(Value) and Preference-Value's data-type.

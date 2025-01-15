@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../app/components/widgets/custom_toast.dart';
 
 class Util {
 
   static Future<bool> check() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
+
+    final bool isConnected = await InternetConnectionChecker.instance.hasConnection;
+    if (isConnected) {
       return true;
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   static void hideKeyBoard(BuildContext context) {

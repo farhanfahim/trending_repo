@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import '../../utils/Util.dart';
-import '../data/models/common_models/base_response.dart';
 import '../data/models/trending_repo_response_model.dart';
 import '../repository/home_repository.dart';
 import '../services/api_constants.dart';
@@ -13,25 +14,18 @@ class HomeRepositoryImpl extends HomeRepository {
   final ApiService _apiService = ApiService();
 
   @override
-  Future<Either<Failure, BaseResponse<List<TrendingRepoResponseModel>>>> getTrendingRepo(Map<String, dynamic> map) async {
+  Future<Either<Failure, List<TrendingRepoResponseModel>>> getTrendingRepo(Map<String, dynamic> map) async {
     try {
       bool? isConnected =await Util.check();
       if (isConnected) {
-
-
         final response = await _apiService.get(
             endPoint: ApiConstants.repo, params: map,);
 
-
-
-        if(response.data['status'] == 200){
-          final data = BaseResponse.fromJson(
-            response.data,
-                (data) => (data as List<dynamic>)
-                .map((item) => TrendingRepoResponseModel.fromJson(item))
-                .toList(),
-          );
-          return Right(data);
+        if(response.statusCode == 200){
+          List<dynamic> jsonList = response.data;
+          List<TrendingRepoResponseModel> trendingRepos =
+          jsonList.map((json) => TrendingRepoResponseModel.fromJson(json)).toList();
+          return Right(trendingRepos);
         } else {
           return Left(await handleUnAuthorizedError(response));
         }

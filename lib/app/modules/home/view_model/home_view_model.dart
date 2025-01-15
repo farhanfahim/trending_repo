@@ -14,6 +14,7 @@ class HomeViewModel extends GetxController {
   RxBool isDataLoading = false.obs;
   HomeViewModel({required this.repository});
   RxList<TrendingRepoResponseModel> list = List<TrendingRepoResponseModel>.empty().obs;
+  static const Duration cacheDuration = Duration(hours: 1);
 
   @override
   void onInit() {
@@ -23,38 +24,60 @@ class HomeViewModel extends GetxController {
 
   Future<dynamic>  getTrendingRepos({bool isRefresh = false}) async {
 
+
     isDataLoading.value = isRefresh ? false : true;
+    isError.value = false;
 
-    var map = {
-      'since': "daily"
-    };
+    final cachedData = await AppPreferences.getCachedData();
+    final lastFetchTime = await AppPreferences.getFetchTimeData();
 
-    final result = await repository.getTrendingRepo(map);
-    result.fold((l) {
+    if (!isRefresh && cachedData.isNotEmpty && lastFetchTime.isNotEmpty) {
+      final lastFetch = DateTime.parse(lastFetchTime);
+      final isStale = DateTime.now().difference(lastFetch) > cacheDuration;
 
-      isDataLoading.value = false;
-      isError.value = true;
-      errorMessage.value = l.message;
-      print(errorMessage.value);
-    }, (response) {
-
-      if(isRefresh) {
-        if(list.isNotEmpty) {
-          list.clear();
-          AppPreferences.clearPreference();
-        }
+      if (!isStale) {
+        // Use cached data if it's not stale
+        List<dynamic> jsonList = jsonDecode(cachedData);
+        List<TrendingRepoResponseModel> trendingRepos =
+        jsonList.map((json) => TrendingRepoResponseModel.fromJson(json)).toList();
+        isDataLoading.value = false;
+        list.value = trendingRepos;
+        return;
       }
-      //AppPreferences.setData(data: json. response.data);
-        list.value = response.data;
-      print("farhan");
-      print(response.data);
-      print(list.length);
-    });
+    }
+
+      var map = {
+        'since': "daily"
+      };
+
+      final result = await repository.getTrendingRepo(map);
+      result.fold((l) {
+
+        isDataLoading.value = false;
+        isError.value = true;
+        errorMessage.value = l.message;
+      }, (response) {
+
+        // Cache the data and timestamp
+        AppPreferences.setCachedData(data: jsonEncode(response));
+        AppPreferences.setFetchTimeData(data: DateTime.now().toIso8601String());
+
+        isDataLoading.value = false;
+        list.value = response;
+
+      });
+
+
   }
 
   void refreshData() {
     isError.value = false;
     errorMessage.value = '';
+      if(list.isNotEmpty) {
+        list.clear();
+        list.refresh();
+        AppPreferences.clearPreference();
+      }
     getTrendingRepos(isRefresh: true);
   }
 }
